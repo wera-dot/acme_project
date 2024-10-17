@@ -1,0 +1,53 @@
+<!-- templates/birthday/birthday.html -->
+{% extends "base.html" %}
+
+
+{% block contentt %}
+    <form>
+      <!-- 
+      <table>
+          {{ form }}
+      </table>
+      
+      <ul>
+          {{ form.as_ul }}
+      </ul>
+      -->
+      <p>
+          {{ form.as_p }}
+      </p>
+      <input type="submit" value="Submit">
+    </form>
+
+  {% with data=request.GET %}
+  <!-- (это старый синтаксис, но он тоже поддерживается):
+   {% with request.GET as data %} -->
+      <!-- {% if request.GET %} -->
+      <!-- {% if data %} -->
+      {% if form.is_valid %}
+
+      <small>Привет, {{ request.GET.first_name }} {{ request.GET.last_name }}</small>
+      {% endif %}
+  {% endwith %}
+  <!--  {% endwith %}  -->
+
+{% endblock %} 
+
+
+
+{% block content %}
+  <form>
+    <p>{{ form.as_p }}</p>
+    <input type="submit" value="Submit">
+  </form>
+  {% with data=request.GET %}
+    {% if form.is_valid %}
+      <h2>Привет, {{ data.first_name }} {{ data.last_name }}</h2>
+      {% if birthday_countdown == 0 %}
+        С днём рождения!
+      {% else %}
+        Осталось дней до дня рождения: {{ birthday_countdown }}!
+      {% endif %}
+    {% endif %}
+  {% endwith %} 
+{% endblock %} 
